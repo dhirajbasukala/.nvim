@@ -1,0 +1,11 @@
+{
+  "extras": [
+    "lazyvim.plugins.extras.editor.harpoon2",
+    "lazyvim.plugins.extras.lang.go",
+    "lazyvim.plugins.extras.lsp.none-ls"
+  ],
+  "news": {
+    "NEWS.md": "5204"
+  },
+  "version": 6
+}
