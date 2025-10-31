@@ -20,3 +20,10 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     vim.api.nvim_buf_set_option(bufnr, "includeexpr", "v:lua.gf_resolve(v:fname)")
   end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "yaml",
+  callback = function()
+    vim.b.autoformat = false
+  end,
+})
