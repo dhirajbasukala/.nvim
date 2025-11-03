@@ -40,42 +40,6 @@ return {
           single_file_support = false, -- Ensures project-wide defs (fixes import resolution)
         },
 
-        -- vue_ls: Handles templates/styles (forwards TS requests to vtsls for integrated defs)
-        -- vue_ls = {
-        --   filetypes = { "vue" },
-        --   root_dir = function(fname)
-        --     local util = require("lspconfig.util")
-        --     return util.root_pattern("package.json", "vue.config.js", "vite.config.js", ".git")(fname)
-        --   end,
-        --   init_options = {
-        --     vue = {
-        --       hybridMode = false, -- Takeover mode: No AST duplication
-        --     },
-        --   },
-        --   on_init = function(client)
-        --     -- Forward TS requests to vtsls (critical for go-to-def across Vue/TS)
-        --     client.handlers["tsserver/request"] = function(_, result, context)
-        --       local vtsls_clients = vim.lsp.get_clients({ bufnr = context.bufnr, name = "vtsls" })
-        --       if #vtsls_clients == 0 then
-        --         vim.notify("No vtsls client found; vue_ls defs may fail.", vim.log.levels.WARN)
-        --         return
-        --       end
-        --       local vtsls_client = vtsls_clients[1]
-        --       local param = unpack(result)
-        --       local id, command, payload = unpack(param)
-        --       vtsls_client:exec_cmd({
-        --         title = "vue_request_forward",
-        --         command = "typescript.tsserverRequest",
-        --         arguments = { command, payload },
-        --       }, { bufnr = context.bufnr }, function(_, r)
-        --         local response = r and r.body
-        --         local response_data = { { id, response } }
-        --         client:notify("tsserver/response", response_data)
-        --       end)
-        --     end
-        --   end,
-        -- },
-
         -- Tailwind: For class go-to-def/hover (optional but fits your stack)
         tailwindcss = {
           root_dir = function(fname)
