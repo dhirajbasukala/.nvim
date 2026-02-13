@@ -3,44 +3,16 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        -- Disable old/legacy Vue servers
-        vuesls = false,
-        vue_ls = false, -- We'll re-enable below as vue_ls
-        ts_ls = false,
-        tsserver = false,
-        -- vtsls: Handles TS/JS/scripts in Vue (with @vue/typescript-plugin for <script> defs)
+        -- Override vtsls root_dir to avoid nested table crash in nvim 0.12.0-dev
         vtsls = {
-          filetypes = {
-            "javascript",
-            "javascriptreact",
-            "typescript",
-            "typescriptreact",
-            "vue",
-          },
-          root_dir = function(fname)
-            local util = require("lspconfig.util")
-            return util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git")(fname)
+          root_dir = function(bufnr, on_dir)
+            local root = vim.fs.root(bufnr, {
+              "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "bun.lock", ".git",
+            }) or vim.fn.getcwd()
+            on_dir(root)
           end,
-          settings = {
-            vtsls = {
-              tsserver = {
-                globalPlugins = {
-                  {
-                    name = "@vue/typescript-plugin",
-                    location = vim.fn.stdpath("data")
-                      .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
-                    languages = { "vue", "javascript", "typescript" },
-                    configNamespace = "typescript",
-                    enableForWorkspaceTypeScriptVersions = true,
-                  },
-                },
-              },
-            },
-          },
-          single_file_support = false, -- Ensures project-wide defs (fixes import resolution)
         },
-
-        -- Tailwind: For class go-to-def/hover (optional but fits your stack)
+        -- Tailwind
         tailwindcss = {
           root_dir = function(fname)
             local util = require("lspconfig.util")
@@ -50,7 +22,7 @@ return {
           end,
         },
 
-        -- Fix ESLint root_dir (your existing)
+        -- ESLint
         eslint = {
           root_dir = function(fname)
             local util = require("lspconfig.util")

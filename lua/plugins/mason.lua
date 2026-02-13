@@ -10,6 +10,9 @@ return {
       "vtsls",
       "tailwindcss-language-server",
       "typescript-language-server",
+      "gopls",
+      "lua-language-server",
+      "pyright",
     },
   },
 }

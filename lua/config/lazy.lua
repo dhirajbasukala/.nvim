@@ -14,6 +14,15 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Shows file path in each window's top bar
+vim.opt.winbar = "%f"
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    -- Display file path in the buffer itself (optional)
+    vim.cmd("set statusline=%F") -- Shows full file path
+  end,
+})
 require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
