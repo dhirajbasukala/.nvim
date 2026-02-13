@@ -1,19 +1,14 @@
 return {
   "stevearc/conform.nvim",
-  opts = {
-    formatters_by_ft = {
-      html = { "prettierd", "prettier", stop_after_first = true },
-      css = { "prettierd", "prettier", stop_after_first = true },
-      scss = { "prettierd", "prettier", stop_after_first = true },
-      javascript = { "prettierd", "prettier", stop_after_first = true },
-      javascriptreact = { "prettierd", "prettier", stop_after_first = true },
-      typescript = { "prettierd", "prettier", stop_after_first = true },
-      typescriptreact = { "prettierd", "prettier", stop_after_first = true },
-      vue = { "prettierd", "prettier", stop_after_first = true }, -- Add this
-      json = { "prettierd", "prettier", stop_after_first = true },
-      yaml = { "prettierd", "prettier", stop_after_first = true },
-      markdown = { "prettierd", "prettier", stop_after_first = true },
-      go = { "gofmt", "goimports" },
-    },
-  },
+  opts = function(_, opts)
+    local prettier = { "prettierd", "prettier", stop_after_first = true }
+    local web_fts = {
+      "html", "css", "scss", "javascript", "javascriptreact",
+      "typescript", "typescriptreact", "vue", "json", "yaml", "markdown",
+    }
+    for _, ft in ipairs(web_fts) do
+      opts.formatters_by_ft[ft] = prettier
+    end
+    opts.formatters_by_ft.go = { "gofmt", "goimports" }
+  end,
 }
