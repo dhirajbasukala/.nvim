@@ -1,7 +1,6 @@
 return {
   -- add gruvbox
   { "ellisonleao/gruvbox.nvim" },
-  { "shaunsingh/nord.nvim" },
   { "catppuccin/nvim", name = "catppuccin" },
   { "oxfist/night-owl.nvim", priority = 1000 },
   {
@@ -29,7 +28,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "night-owl",
+      colorscheme = "catppuccin-mocha",
     },
   },
 }
