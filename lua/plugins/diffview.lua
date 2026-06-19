@@ -2,15 +2,21 @@ return {
   "sindrets/diffview.nvim",
   keys = {
     {
-      "<leader>df", -- Example keymap (space + d + f)
+      "<leader>df", -- open/switch to diffview
       function()
-        if next(require("diffview.lib").views) == nil then
-          vim.cmd("DiffviewOpen")
-        else
+        local lib = require("diffview.lib")
+        local view = lib.get_current_view()
+        if view then
+          -- we are already on the Diffview tab => so close it
           vim.cmd("DiffviewClose")
+        elseif next(lib.views) ~= nil then
+          -- A Diffview exits on another tab => jumpt to it
+          vim.api.nvim_set_current_tabpage(lib.views[1].tabpage)
+        else
+          vim.cmd("DiffviewOpen")
         end
       end,
-      desc = "Toggle Diffview window",
+      desc = "Toggle/Focus Diffview window",
     },
     -- Add a keymap to open Diffview with a specific command
     {
