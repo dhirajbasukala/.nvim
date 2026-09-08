@@ -34,3 +34,6 @@ end, { desc = "Increase terminal height", nowait = true })
 vim.keymap.set("n", "<M-Down>", function()
   resize_term(-3)
 end, { desc = "Decrease terminal height", nowait = true })
+
+-- paste from yank register instead of unnamed
+vim.keymap.set("x", "p", '"0p')

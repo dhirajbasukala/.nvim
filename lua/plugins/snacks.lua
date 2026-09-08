@@ -38,6 +38,15 @@ return {
       },
     })
 
+    -- Show hidden (dotfiles) and gitignored files in the file picker.
+    -- `hidden` = dotfiles, `ignored` = files excluded by .gitignore.
+    opts.picker = vim.tbl_deep_extend("force", opts.picker or {}, {
+      sources = {
+        files = { hidden = true, ignored = true },
+        explorer = { hidden = true, ignored = true },
+      },
+    })
+
     -- Suppress E325 swap file warning when picker jumps to a file
     opts.picker = vim.tbl_deep_extend("force", opts.picker or {}, {
       actions = {
